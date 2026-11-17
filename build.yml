@@ -1,0 +1,35 @@
+name: build
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Pobierz WorldEdit 7.4.2 (tylko do kompilacji)
+        run: |
+          mkdir -p libs
+          URL=$(curl -s https://api.modrinth.com/v2/version/oY3E2pzA | jq -r '.files[] | select(.primary==true) | .url')
+          echo "Pobieram: $URL"
+          curl -L -o libs/worldedit-mod-7.4.2.jar "$URL"
+          ls -la libs
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: 8.14.3
+
+      - name: Build
+        run: gradle build --stacktrace
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: worldgradient-jar
+          path: build/libs/worldgradient-*.jar

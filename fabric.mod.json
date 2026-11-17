@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "worldgradient",
+  "version": "${version}",
+  "name": "WorldGradient",
+  "description": "Komenda //gradient do WorldEdit: gradient z blokow w zaznaczeniu.",
+  "authors": ["Gabriel"],
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["pl.gradient.GradientMod"]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": "~1.21.11",
+    "java": ">=21",
+    "fabric-api": "*",
+    "worldedit": "*"
+  }
+}
